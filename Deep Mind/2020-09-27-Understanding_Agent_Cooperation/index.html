@@ -10,6 +10,8 @@
         <link rel="canonical" href="http://jonqkim.github.io/Deep%20Mind/2020-09-27-Understanding_Agent_Cooperation/">
       
       
+        <meta name="author" content="Jongkyu Kim">
+      
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.1">
     
@@ -56,6 +58,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#understanding-agent-cooperation" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -194,9 +201,36 @@
     <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Agent 협동의 이해 - 번역
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
     <a href="./" title="Agent 협동의 이해 - 번역" class="md-nav__link md-nav__link--active">
       Agent 협동의 이해 - 번역
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-agent-cooperation" class="md-nav__link">
+    Understanding Agent Cooperation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -213,6 +247,34 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-agent-cooperation" class="md-nav__link">
+    Understanding Agent Cooperation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
@@ -221,8 +283,8 @@
                 
                   <h1>Agent 협동의 이해 - 번역</h1>
                 
-                <p><br></p>
-<p>2020-10-01</p>
+                <p>2020-10-01</p>
+<hr />
 <blockquote>
 <p>*역자 주 <br>
 원문은 2017년 딥마인드 블로그에 게시된 글로서, 같은 해 논문을 풀어쓴 내용입니다. (하단 링크 참조) <br><br>
@@ -231,8 +293,9 @@
 - 원문 링크: <a href="https://deepmind.com/blog/article/understanding-agent-cooperation">Understanding Social Dilemmans</a> <br>
 - 논문 링크: <a href="https://arxiv.org/abs/1702.03037">Multi-agent Reinforcement Learning in Sequential Social Dilemmas</a></p>
 </blockquote>
-<p><br>
-2017-02-09</p>
+<hr />
+<h2 id="understanding-agent-cooperation">Understanding Agent Cooperation</h2>
+<p>2017-02-09</p>
 <p><strong>우리는 협력이 발생하는 과정을 모델링하기 위해서 multi-agent reinforcement learning 을 활용하였다. Sequential social dilemmas 라는 새로운 개념을 통해, 합리적인 agent 들이 어떻게 상호작용하고 자연 환경과 각자의 인지 능력에 따라 어떻게 협력적인 행동을 취하는지를 모델링할 수 있었다. 이 연구를 통해 우리는 경제, 교통, 환경 문제와 같은 복잡한 multi-agent 시스템에 대한 이해와 조정을 증진할 수 있는 가능성을 찾는다.</strong></p>
 <p>자기 주도적인 사람들은 더 큰 업적을 위해 자주 협동한다. 각자가 자신의 안녕을 챙기고 다른 사람의 안녕은 무시하는 데만 관심이 있는 세상에서 어떻게 이런 일이 가능할까?</p>
 <p>어떤 환경에서 이기적인 agent 들이 협동하는게 되는지에 대한 의문은 사회과학의 오랜 문제이다. 이 현상을 설명하는 가장 단순하면서도 세련된 모델은 게임 이론으로 잘 알려진 죄수의 딜레마이다.</p>
@@ -242,8 +305,8 @@
 <p>예를 들어서, 다음에 언급할 Gathering 게임을 생각해보자: 빨강과 파랑, 두 agent 가 공존하는 공간을 배회하고 positive rewards 를 얻기 위해서 사과를 수집한다. 또한 상대 agent 를 광선으로 맞춰서 ("공격") 일시적으로 게임에서 퇴장시킬 수 있지만, 이 행동에 바로 보상이 주어지지는 않는다. 각 agent 들이  Gathering 게임을 플레이하는 모습을 아래 동영상에서 볼 수 있다.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/DguzKGCw-Qg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<p><br>
-Agent 들에게 게임을 수천번 플레이하게 하고 deep multi-agent reinforcement learning 을 통해 합리적으로 행동하도록 학습시켰다. 당연하게도 사과가 많은 환경에서는 agent 들이 평화롭게 공존하며 최대한 많은 사과를 수집했다. 하지만 사과의 갯수를 줄일 수록 agent 들은 상대 agent 를 "공격" 해서 부족한 사과를 독차지하며 수집하는 것이 유리함을 배우게 된다.</p>
+<p><br></p>
+<p>Agent 들에게 게임을 수천번 플레이하게 하고 deep multi-agent reinforcement learning 을 통해 합리적으로 행동하도록 학습시켰다. 당연하게도 사과가 많은 환경에서는 agent 들이 평화롭게 공존하며 최대한 많은 사과를 수집했다. 하지만 사과의 갯수를 줄일 수록 agent 들은 상대 agent 를 "공격" 해서 부족한 사과를 독차지하며 수집하는 것이 유리함을 배우게 된다.</p>
 <p>Gathering 게임은 원래 죄수의 딜레마와 많이 닮아 있는 것으로 나타났지만, 각 agent 들이 각자 적절한 행동을 만들어나가는 재미있는 과정을 연구할 수 있게 해준다: 공존하며 사과를 채집할 것인가, 상대 agent 를 공격할 것인가.</p>
 <p>이러한 sequential social dilemmas 에서, 어떤 요소가 agent 들의 협력에 기여하는지를 확인할 수 있다. 예를 들어서, 다음 그래프는 Gathering 게임에서 사과가 부족할 수록 "공격" 이 더 자주 발생한다는 것을 보여준다. 더구나, 더 복잡한 전략을 세울 수 있는 agent 들일 수록 상대를 더 자주 공격하는, 즉 덜 협조적인 행동을 보인다. - 사과의 부족한 정도를 어떻게 바꾸어도 말이다.</p>
 <p><img src='/img/2020-09-27-Understanding_Agent_Cooperation_01.jpg' alt='fig.1' width=800 /></p>
