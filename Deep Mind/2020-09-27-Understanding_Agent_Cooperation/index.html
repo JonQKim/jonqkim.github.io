@@ -17,7 +17,7 @@
     
     
       
-        <title>Agent 협동의 이해 - 번역 - Rage Against Deep Learning</title>
+        <title>Understanding Agent Cooperation - 번역 - Rage Against Deep Learning</title>
       
     
     
@@ -60,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#understanding-agent-cooperation" class="md-skip">
+        <a href="#_1" class="md-skip">
           Skip to content
         </a>
       
@@ -88,7 +88,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Agent 협동의 이해 - 번역
+              Understanding Agent Cooperation - 번역
             
           </span>
         </div>
@@ -202,12 +202,12 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Agent 협동의 이해 - 번역
+        Understanding Agent Cooperation - 번역
         <span class="md-nav__icon md-icon"></span>
       </label>
     
-    <a href="./" title="Agent 협동의 이해 - 번역" class="md-nav__link md-nav__link--active">
-      Agent 협동의 이해 - 번역
+    <a href="./" title="Understanding Agent Cooperation - 번역" class="md-nav__link md-nav__link--active">
+      Understanding Agent Cooperation - 번역
     </a>
     
       
@@ -222,8 +222,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#understanding-agent-cooperation" class="md-nav__link">
-    Understanding Agent Cooperation
+  <a href="#_1" class="md-nav__link">
+    역자 주 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent" class="md-nav__link">
+    Agent 협동의 이해
   </a>
   
 </li>
@@ -262,8 +269,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#understanding-agent-cooperation" class="md-nav__link">
-    Understanding Agent Cooperation
+  <a href="#_1" class="md-nav__link">
+    역자 주 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent" class="md-nav__link">
+    Agent 협동의 이해
   </a>
   
 </li>
@@ -281,20 +295,20 @@
               
                 
                 
-                  <h1>Agent 협동의 이해 - 번역</h1>
+                  <h1>Understanding Agent Cooperation - 번역</h1>
                 
                 <p>2020-10-01</p>
 <hr />
+<h3 id="_1">역자 주 <br></h3>
 <blockquote>
-<p>*역자 주 <br>
-원문은 2017년 딥마인드 블로그에 게시된 글로서, 같은 해 논문을 풀어쓴 내용입니다. (하단 링크 참조) <br><br>
+<p>원문은 2017년 딥마인드 블로그에 게시된 글로서, 같은 해 논문을 풀어쓴 내용입니다. (하단 링크 참조) <br><br>
 죄수의 딜레마로 대표되는 기존 게임 이론은 주어진 환경에서 개인이 협동과 배척을 선택하는 과정을 설명하는데, 이는 하나의 행동만을 대상으로 하는 단순한 경우이므로 경우에 따른 보상을 표로 정리해서 최적의 행동을 쉽게 계산할 수 있었습니다. <br> <br>
 그에 반해 본 글의 실험은 시간에 걸쳐서 계속 행동을 결정해야 하는 환경을 주고, 개인들이 본인에게 이익이 되는 협동과 배척을 어떻게 학습해나가는지를 deep multi-agent reinforcement learning 학습하여 시뮬레이션합니다. 이와 같은 환경을 글에서는 'Sequential Social Dilemmas' 로 명명하며, 좀더 현실에 가까운 사회 과학 분석 도구를 제공할 것으로 기대합니다. <br> <br>
 - 원문 링크: <a href="https://deepmind.com/blog/article/understanding-agent-cooperation">Understanding Social Dilemmans</a> <br>
 - 논문 링크: <a href="https://arxiv.org/abs/1702.03037">Multi-agent Reinforcement Learning in Sequential Social Dilemmas</a></p>
 </blockquote>
 <hr />
-<h2 id="understanding-agent-cooperation">Understanding Agent Cooperation</h2>
+<h2 id="agent">Agent 협동의 이해</h2>
 <p>2017-02-09</p>
 <p><strong>우리는 협력이 발생하는 과정을 모델링하기 위해서 multi-agent reinforcement learning 을 활용하였다. Sequential social dilemmas 라는 새로운 개념을 통해, 합리적인 agent 들이 어떻게 상호작용하고 자연 환경과 각자의 인지 능력에 따라 어떻게 협력적인 행동을 취하는지를 모델링할 수 있었다. 이 연구를 통해 우리는 경제, 교통, 환경 문제와 같은 복잡한 multi-agent 시스템에 대한 이해와 조정을 증진할 수 있는 가능성을 찾는다.</strong></p>
 <p>자기 주도적인 사람들은 더 큰 업적을 위해 자주 협동한다. 각자가 자신의 안녕을 챙기고 다른 사람의 안녕은 무시하는 데만 관심이 있는 세상에서 어떻게 이런 일이 가능할까?</p>
