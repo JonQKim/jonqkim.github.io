@@ -1,0 +1,681 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <link rel="canonical" href="http://jonqkim.github.io/Deep%20Mind/2020-11-10-Fast_reinforcmenet_learning_through_the_composition_of_behaviours.html">
+      
+      
+        <meta name="author" content="Jongkyu Kim">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.1">
+    
+    
+      
+        <title>Fast reinforcement learning through the composition of behaviours - 번역 - Rage Against Deep Learning</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.38780c08.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f72e892.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#-" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="http://jonqkim.github.io/" title="Rage Against Deep Learning" class="md-header-nav__button md-logo" aria-label="Rage Against Deep Learning">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Rage Against Deep Learning
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Fast reinforcement learning through the composition of behaviours - 번역
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="http://jonqkim.github.io/" title="Rage Against Deep Learning" class="md-nav__button md-logo" aria-label="Rage Against Deep Learning">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Rage Against Deep Learning
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Deep Mind
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Deep Mind" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Deep Mind
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="2020-09-27-Understanding_Agent_Cooperation.html" title="Understanding Agent Cooperation - 번역" class="md-nav__link">
+      Understanding Agent Cooperation - 번역
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Fast reinforcement learning through the composition of behaviours - 번역
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="2020-11-10-Fast_reinforcmenet_learning_through_the_composition_of_behaviours.html" title="Fast reinforcement learning through the composition of behaviours - 번역" class="md-nav__link md-nav__link--active">
+      Fast reinforcement learning through the composition of behaviours - 번역
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    행동의 조합을 통한 빠른 강화학습 - 번역
+  </a>
+  
+    <nav class="md-nav" aria-label="행동의 조합을 통한 빠른 강화학습 - 번역">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    지능의 조합 능력
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    세상을 표현하는 두 가지 방법
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#successor-features" class="md-nav__link">
+    Successor features: 중간 지점
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#successor-features-a-middle-ground" class="md-nav__link">
+    Successor features: a middle ground
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#successor-feature" class="md-nav__link">
+    Successor feature 사용하기: 정책 사전에서 새로운 계획을 만들기
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpe-gpi" class="md-nav__link">
+    GPE 와 GPI 의 동작을 보여주는 간단한 예
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpe-gpi_1" class="md-nav__link">
+    GPE 와 GPI 의 연구 맥락
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    강화학습에 대한 조합적인 접근법
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    더 읽을거리
+  </a>
+  
+    <nav class="md-nav" aria-label="더 읽을거리">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpi-hierarchical-rl-and-related-approaches" class="md-nav__link">
+    GPI, hierarchical RL, and related approaches
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpe-gpi-transfer-learning-and-related-approaches" class="md-nav__link">
+    GPE + GPI, transfer learning, and related approaches
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    행동의 조합을 통한 빠른 강화학습 - 번역
+  </a>
+  
+    <nav class="md-nav" aria-label="행동의 조합을 통한 빠른 강화학습 - 번역">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    지능의 조합 능력
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    세상을 표현하는 두 가지 방법
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#successor-features" class="md-nav__link">
+    Successor features: 중간 지점
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#successor-features-a-middle-ground" class="md-nav__link">
+    Successor features: a middle ground
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#successor-feature" class="md-nav__link">
+    Successor feature 사용하기: 정책 사전에서 새로운 계획을 만들기
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpe-gpi" class="md-nav__link">
+    GPE 와 GPI 의 동작을 보여주는 간단한 예
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpe-gpi_1" class="md-nav__link">
+    GPE 와 GPI 의 연구 맥락
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    강화학습에 대한 조합적인 접근법
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    더 읽을거리
+  </a>
+  
+    <nav class="md-nav" aria-label="더 읽을거리">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gpi-hierarchical-rl-and-related-approaches" class="md-nav__link">
+    GPI, hierarchical RL, and related approaches
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gpe-gpi-transfer-learning-and-related-approaches" class="md-nav__link">
+    GPE + GPI, transfer learning, and related approaches
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Fast reinforcement learning through the composition of behaviours - 번역</h1>
+                
+                <p>2020-11-10</p>
+<hr />
+<blockquote>
+<p>원문 링크: https://deepmind.com/blog/article/fast-reinforcement-learning-through-the-composition-of-behaviours</p>
+</blockquote>
+<hr />
+<h2 id="-">행동의 조합을 통한 빠른 강화학습 - 번역</h2>
+<h3 id="_1">지능의 조합 능력</h3>
+<p>만약 새로운 조리법을 배울 때마다 재료의 껍질을 까고 냄비를 젓는 방법을 처음부터 모두 다시 배워야 한다고 생각해보자. 많은 머신러닝 시스템에서 에이전트는 새로운 일에 직면했을 때 많은 경우 완전히 처음부터 다시 학습한다. 하지만 인간이 이보다는 더 효율적으로 학습한다는 것은 당연하다: 인간은 이전에 학습한 능력을 조합할 수 있다. 한정적인 단어들을 재조합해서 거의 무한정에 가까운 문장을 재조합하는 것과 같은 방법으로, 인간은 새로운 태스크를 해결하기 위해서 이미 가지고 있던 기술들을 목적에 맞게 변형하고 재조합한다.</p>
+<p>자연에서는 동물이 먹이를 모으거나 또다른 보상을 얻기 위해 환경을 탐색하고 상호작욤할 때 학습이 일어난다. 이 패러다임을 강화학습에서 차용하였다: 강화학습은 환경과의 상호작용 결과에 따른 보상 (혹은 처벌) 에 따라서 특별한 행동 패턴을 강화하거나 억제한다. 최근 강화학습과 딥러닝의 조합은 인상적인 결과를 보여주었다. 예를 들면 바둑이나 체스 같은 보드 게임, 모든 종류의 아타리 게임 뿐만 아니라 Dota 나 스타크래프트2 같은 어려운 최신 게임을 배우는 에이전트들이 있다.</p>
+<p>강화학습의 주요한 한계는 현재의 학습 방식에서는 막대한 양의 경험이 필요하다는 것이다. 예를 들어서, 하나의 아타리 게임을 학습하기 위해서 강화학습 에이전트는 몇 주간 쉬지 않고 플레이한 양에 해당하는 데이터를 필요로 하는 것이 일반적이다. MIT 와 하버드에서의 연구에 따르면 어떤 경우에 인간은 15분이면 같은 수준에 도달할 수 있다.</p>
+<p>이러한 차이를 만드는 원인 중 하나는, 인간과 달리 강화학습 에이전트는 하나의 태스크에 대해서 보통 처음부터 학습한다는 것이다. 우리는 에이전트가 이전 태스크에서 얻은 지식을 발판 삼아서 새로운 태스크를 좀더 빠르게 학습하기를 바란다. 마치 요리사가 요리를 전에 해보지 않은 사람들보다 더 쉽게 새로운 레서피를 학습하는 것처럼 말이다. 최근 Proceedings of the National Academy of Science (PNAS) 에 게재된 글에서, 우리는 강화학습 에이전트에게 이러한 능력을 부여하기 위한 프레임웍을 설명하였다.</p>
+<h3 id="_2">세상을 표현하는 두 가지 방법</h3>
+<p>우리 접근법을 설명하기 위해서 반복적인 일상 활동인 출퇴근을 예로서 알아보려고 한다. 다른 시나리오를 생각해보자: 에이전트는 매일 집에서 사무실까지 출근해야 하고, 가는 길에 항상 커피를 산다. 집에서 사무실로 가는 길에는 두 곳의 카페가 있다: 한 카페는 커피가 훌륭하지만 먼 길에 있고, 다른 카페는 커피가 보통이지만 더 짧은 출근길에 있다 (그림 1). 에이전트가 커피와 그날의 빠른 출근 중 어느 쪽에 더 가치를 두느냐에 따라서 두 출근길 중에 하나를 택할 것이다. (그림 1에서 노란색과 파란색으로 표시된 길)</p>
+<p><img src='../img/2020-10-27-Fast_reinforcmenet_learning_through_the_composition_of_behaviours/
+fig1.webp' alt='fig.1' width=800 /></p>
+<p>그림 1: 예시한 출근길 지도</p>
+<p>전통적인 강화학습 알고리즘은 크게 모델 기반 에이전트와 모델 프리 에이전트, 두가지 종류로 구분된다 (그림 2와 3). 모델 기반 에이전트는 (그림 2) 환경을 여러가지 측면에서 본 representation 으로 구성한다. 그 중 한 종류의 에이전트는 다른 위치들이 어떻게 연결되어 있는지, 각 카페의 커피가 얼마나 훌륭한지, 그리고 그 밖의 관련된 지식을 가지고 있다. 모델 프리 에이전트 (그림 3) 은 환경에 대해서 훨씬 더 간단한 표현을 사용한다. 예를 들어서, 가치 기반의 모델 프리 에이전트는 집을 출발하여 가능한 각 경로에 대해서 하나의 숫자만을 연관시킨다; 이는 각 경로의 기대 가치이며, 커피의 품질과 출근 거리 사이를 특정 가중치로 조합한 것이다. 예를 들어서 그림 1의  경로를 택해보자. 이 경로의 거리가 4 이고, 해당 경로에서의 커피 품질이 별 세개 등급이라고 해보자. 에이전트가 커피 품질보다 출근 거리에 대해서 50% 더 중요하게 생각한다면, 이 경로의 가치는 (-1.5 x 4) + (1 x 3) = -3 가 될 것이다. (출근 거리에 대해서는 음의 가중치를 주었는데, 이는 긴 출근 거리는 나쁜 것임을 의미한다.)</p>
+<p><img src='../img/2020-10-27-Fast_reinforcmenet_learning_through_the_composition_of_behaviours/
+fig2.webp' alt='fig.2' width=800 /></p>
+<p>그림 2: 모델 기반의 에이전트가 사용하는 representation. 에이전트와 연관성이 있는 것들만 representation 에 표현되어 있다. (그림 1과 비교). 하지만, 이 representation 은 모델 프리 에이전트가 사용하는 것과 비교하면 훨씬 더 복잡하다. (그림 3과 비교)</p>
+<p><img src='../img/2020-10-27-Fast_reinforcmenet_learning_through_the_composition_of_behaviours/
+fig3.webp' alt='fig.3' width=800 /></p>
+<p>그림 3: 가치 기반 모델 프리 에이전트가 사용하는 representation. 각각의 위치에서, 에이전트는  가능한 각 행동에 대해 하나의 숫자만 가지고 있다: 이 숫자들은 에이전트가 취할 수 있는 모든 가능한 행동에 매겨지는 "가치" 이다. 위치가 주어지면, 에이전트는 취할 수 있는 가치값들을 확인하고, 이 정보만을 이용해서 행동을 결정한다. (오른쪽 그림의 "HOME" 위치에 묘사되었듯이). 모델 기반 representation 과 달리, 정보는 공간 정보와 상관 없이 저장된다. 이는 위치 사이에 연결 정보가 없다는 것을 의미한다. (그림 2와 비교)</p>
+<p>우리는 커피 품질과 출근 거리 사이의 상대적인 가중치의 의미를 해석할 수 있다. 어떤 고정된 선호에 대해서, 모델 프리와 모델 기반 에이전트는 같은 경로를 선택할 것이다. 그렇게 결과가 같다면 왜 모델 기반 에이전트와 같이 더 복잡한 representation 으로 세상을 표현하는가? 에이전트가 같은 커피를 다면 왜 환경에 대해서 많이 알아야만 하는가?</p>
+<p>선호는 매일 바뀔 수 있다: 에이전트가 사무실까지 경로를 계획하는 데는 허기진 정도를 고려할 수도 있고, 미팅 시간에 지각하는 것을 고려할 수도 있다. 모델 프리 에이전트가 이를 해결하는 한 가지 방법은 모든 종류의 선호에 대해서 최고의 경로를 학습하는 것이다. 이는 모든 종류의 선호에 대한 조합을 학습하느라 시간이 많이 걸리므로 이상적인 방법이 아니다. 또한 만약에 무한정 많은 종류의 선호가 있다고 하면 관련한 모든 경로를 학습하는 일은 불가능하다.</p>
+<p>모델 기반 에이전트는 어떤 조합의 선호에 대해서도 학습 없이 적응할 수 있다. 모든 가능한 경로를 상상하고 그 경로가 현재 선호를 얼마나 만족시켜줄지 묻는 방법으로 말이다. 하지만 이 접근법도 약점이 있다. 첫째, "마음속으로" 모든 가능한 경로를 생성하고 평가하는 일은 많은 계산량이 필요하다. 둘째, 세상 전체를을 모델링하는 일은 복잡한 환경에서는 매우 어려운 일이다.</p>
+<p>모델 프리 에이전트는 빠르게 학습하지만 변경이 어렵다. 모델 기반 에이전트는 유연하지만 학습이 느리다. 중간적인 해결책이 있을까?</p>
+<h3 id="successor-features">Successor features: 중간 지점</h3>
+<h3 id="successor-features-a-middle-ground">Successor features: a middle ground</h3>
+<p>행동 과학과 인지 과학의 최근 연구에 따르면, 어떤 상황에서 인간과 동물은 모델 프리와 모델 기반 접근법을 절충한 알고리즘 모델에 기반하여 결정을 내린다 (여기와 여기). 가정은 다음과 같은데, 모델 프리 에이전트와 같이 인간들도 d여러 전략을 숫자로 평가한다. 하지만, 인간은 이를 하나의 숫자로 요약하는 대신 그를 둘러싼 세상을 묘사하는 여러가지 다른 숫자들로 요약한다. 모델 기반 에이전트와 유사하게 말이다.
+강화학습 에이전트에게 같은 능력을 부여하는 일이 가능하다. 우리 예에서 그런 에이전트는 각 경로에 대해서 커피의 품질을 나타내는 숫자와 사무실까지의 거리를 나타내는 숫자를 가지고 있다. 또한 에이전트가 최적화에 크게 신경쓰지 않지만 미래에 참고 가능한 것에 관련한 숫자들도 가지고 있을 수 있다. (예를 들어서 각 카페의 음식 맛과 같은 것들) 에이전트가 계속 고려하는 이러한 요소들을 "features" 라고 보통 명한다. 이로 인해, 세상을 이렇게 표현하는 방식을 successor features 로 부른다. (오리지널 표기에 의하면 "successor representation" 이다.)
+Successor featuers 는 모델 프리와 모델 기반을 절충한 representation 으로 볼 수 있다. 후자와 같이, successor feature 는 여러가지 다른 숫자들로 요약하고, 세상의 특성을 하나의 가치 이상으로 잡아낸다. 하지만, 모델 프리 representation 과 마찬가지로, 에이전트가 따라가는 숫자들은 에이전트가 관심 있는 features 들을 단순히 통계적인 요약한 값일 뿐이다. 이 방법으로, successor features 는 모델 프리 에이전트를 풀어쓴 버젼과 같다. 그림 4는 successor features 를 사용하는 에이전트가 예시한 환경을 어떻게 바라보는지를 그리고 있다.</p>
+<p><img src='../img/2020-10-27-Fast_reinforcmenet_learning_through_the_composition_of_behaviours/
+fig4.webp' alt='fig.4' width=800 /></p>
+<p>그림 4: Successor features 로 세상을 표현하기. 이는 모델 프리 에이전트가 세상을 표현하는 방식과 유사하지만, 각 경로를 하나의 숫자와 연관짓는 것과 달리, 에이전트는 여러 개의 숫자들을 가지고 있다. (이 경우, 커피, 음식, 그리고 거리). "집" 에서 에이전트는 3개가 아닌 9개의 숫자를 가지고 있고, 그 때의 선호에 따라서 가중치를 부여하게 된다. (그림3 과 비교)</p>
+<h3 id="successor-feature">Successor feature 사용하기: 정책 사전에서 새로운 계획을 만들기</h3>
+<p>Successor feature 는 유용한 representation 이다. 왜냐하면 여러가지 다른 조합을 가진 선호에 대해서 경로를 평가할 수 있기 때문이다. 그림 1에서 다시  경로를 선택해보자. Successor features 를 활용하면, 에이전트는 해당 경로에 대해 3이라는 숫자를 얻게 된다: 경로의 길이 (4), 커피의 품질 (3) 그리고 음식의 맛 (5). 에이전트가 이미 아침을 먹었다면 음식에는 별로 신경쓰지 않을 것이다. 늦었다면, 커피의 품질보다는 거리에 더 많인 신경쓸 것이다. 예를 들자면 이전보다 50% 더와 같이 말이다. 이 시나리오에서 파란 경로의 가치는 위의 예에서는  (-1.5 x 4) + (1 x 3) + (0 x 5) = -3 이 될 것이다. 하지만 이제, 에이전트가 배고픈 날이라면, 그리고 커피 만큼이나 음식을 신경쓰게 된다면 이 경로의 가치를 바로 (-1.5 x 4) + (1 x 3) + (1 x 5) = 2 로 업데이트할 수 있다. 이와 같은 전략을 취하면, 에이전트는 어떤 경로도 모든 선호에 대해서 평가할 수 있다.</p>
+<p>해당 예에서, 에이전트는 경로를 선택할 수 있다. 좀더 일반적으로는, 에이전트는 정책을 탐색한다: 모든 가능한 상황에서 미리 방법을 정해놓는 것 말이다. 정책과 경로는 밀접하게 연관되어 있다: 우리 예에서 정책은 집에서 카페 A 로 가고, 카페 A 에서 사무실로 가는  경로를 선택한다. 그래서 이 경우에 우리는 정책과 경로를 선택적으로 사용할 수 있다. (만약 환경에 무작위성이 있다면 이렇지는 않을 것이지만, 이렇게 상세한 경우는 일단 제쳐두자). 여러 조합의 선호에 대해서 successor features 를 활용하여 각 경로를 어떻게 평가하는지에 대해서 살펴보았었다. 우리는 이 과정을 generalised policy evaluation, 혹은 GPE 로 명명한다.</p>
+<p>GPE 가 왜 유용할까? 에이전트가 정책을 사전으로 가지고 있다고 해보자 (예를 들면 사무실로 가는 알려진 길에 대해서). 선호하는 조합이 주어지면, 에이전트는 GPE 를 써서 각 사전의 정책이 해당 조합에서 얼마나 잘 작동하는지 알 수 있다. 이제 정말 흥미로운 부분이 등장하는데: 해당 정책을 빠르게 평가함으로써, 에이전트는 완전히 새로운 정책을 바로 만들 수 있다는 것이다. 방법은 간단하다: 에이전트가 결정을 내려야할 때마다 다음 질문을 던져본다: "이 결정을 내리고 다음부터 가장 높은 가치를 가지는 정책을 따른다면, 어떤 결정이 최대의 가치를 가져올까?" 놀랍게도, 에이전트가 각 경우에 가장 큰 가치를 가져오는 결정을 내린다면, 그 결정을 내리게 한 각 정책들보다 더 좋은 정책이 만들어지게 된다.</p>
+<p>이렇게 정책들을 "이어 붙이기" 하는 과정을 통해 generalised policy improvement, 혹은 GPI 라고 부르는 더 나은 정책이 만들어진다. 그림 5는 우리 예를 통해서 GPI 가 어떻게 동작하는지를 설명하고 있다.</p>
+<p><img src='../img/2020-10-27-Fast_reinforcmenet_learning_through_the_composition_of_behaviours/
+fig1.webp' alt='fig.5' width=800 /></p>
+<p>그림 5: GPI 의 동작. 이 예에서 에이전트는 커피와 음식의 품질보다 50% 더 큰 중요성을 출근 거리에 둔다.  이 경우 최선은 카페 A, 카페 B 를 거쳐서 사무실로 가는 것이다. 에이전트는 청색, 황색, 오렌지색 길에 대한 세 가지 정책을 알고 있다 (그림 1). 각 정책은 다른 경로를 선택하지만, 어떤 길도 원하던 경로와는 일치하지 않는다. GPE 를 사용하면, 에이전트는 현재 선호에 맞추어서 세 가지 정책을 평가한다. (이는 경로, 커피, 음식 각각에 대해서 가중치 -1.5, 1, 1 을 주는 것이다.) 이러한 가치 평가에 기반해서, 에이전트는 집에서 다음 물음을 던진다: "내가 만약 세 가지 정책 중 한 가지를 선택한다면, 어떤 정책이 최고일까?" 이 질문에 대한 대답은 청색 정책이기 때문에, 에이전트는 그 정책을 따를 것이다. 하지만, 청색 정책을 따르는 대신, 에이전트가 카페A 에 도착해서 같은 질문을 던진다. 이제, 청색 경로 대신, 에이전트는 오렌지색 경로를 따를 것이다. 이 과정을 반복하면 에이전트는 선호를 만족하는 최적의 경로를 찾을 수 있다. 어떤 정책도 단독으로는 할 수 없는 일임에도 말이다.</p>
+<p>GPI 를 통해서 만들어진 정책의 성능은 얼마나 다양한 정책들을 에이전트가 알고 있느냐에 달려있다. 예를 들어서, 현재 예에서, 에이전트가 청색과 황색 경로를 알고 있다면, 어떤 커피 품질과 출근 거리에 대한 선호 조합에 대해서도 최적의 길을 찾을 수 있을 것이다. 하지만 GPI 정책이 항상 최적의 경로를 찾는 것은 아니다. 그림 1 에서 에이전트가 카페 A 와 카페 B 를 차례대로 방문하는 일은 절대 일어나지 않을 것이다. 만약에 이 방식으로 두 카페를 연결하는 정책을 알지 못한다면 말이다. (그림에서 오렌지색 경로에 해당)</p>
+<h3 id="gpe-gpi">GPE 와 GPI 의 동작을 보여주는 간단한 예</h3>
+<p>GPE 와 GPI 의 장점을 보여주기 위해서, 우리의 최근 논문에 실었던 실험을 살짝 보여주려고 한다 (상세는 논문 참조). 실험은 단순한 환경을 사용하는데, 우리의 접근법이 유용한 타입의 문제를 추상적인 방법으로 표현하고 있다. 그림 6에서 볼 수 있듯이, 환경은 10개의 오브젝트들이 배치되어 있는 10 x 10 격자이다. 에이전트는 오브젝트를 획득해야 0 이 아닌 보상을 얻게 된다. 여기서 다른 오브젝트들이 무작위적인 위치에 갑자기 나타나게 된다. 오브젝트에 대한 보상은 그 타입에 달려 있다. 오브젝트의 타입은 구체적 혹은 추상적인 개념을 표현하고자 만들어졌다; 이전 예와 연관 짓기 위해서 각 오브젝트들이 커피 아니면 음식이라고 가정해보자 (이는 에이전트가 쫓는 특성이 된다.)</p>
+<p><img src='../img/2020-10-27-Fast_reinforcmenet_learning_through_the_composition_of_behaviours/
+fig6.webp' alt='fig.6' width=800 /></p>
+<p>그림 6: GPE 와 GPI 의 유용성을 보이기 위한 간단한 환경. 에이전트는  방향의 액션을 가지고 움직이고 ("위", "아래", "왼쪽", "오른쪽"), 오브젝트를 획득했을 때 0 이 아닌 보상을 받는다. 오브젝트 걸린 보상은 그 타입에 의해서 정의된다. ("커피" 혹은 "음식")</p>
+<p>당연히, 최적의 전략은 커피와 음식에 대한 현재 선호에 따라 변한다. 그림 6 에서, 커피만 신경 쓰는 에이전트는 적색 경로를 따라갈 것이고, 음식에만 집중하는 에이전트는 청색 경로를 따라갈 것이다. 에이전트가 커피와 음식에 각각 다른 가중치를 두는 중간적인 상황을 생각해볼 수도 있다. 에이전트가 둘 중 하나를 피하는 경우도 포함해서 말이다. 예를 들어서, 에이전트가 커피를 원하고 음식은 전혀 원하지 않는다면, 그림 6 에서 회색 경로가 적색 경로보다 나은 선택이 될 것이다.</p>
+<p>이 문제에서 어려운 부분은 새로운 선호에 (혹은 "태스크") 대해서 빠르게 적응하는 것이다. 이 실험에서는 어떻게 GPE 와 GPI 를 활용하는지 보여준다. 에이전트는 두 개의 정책을 학습했다: 하나는 커피를 쫓고 다른 하나는 음식을 쫓는다. 그리고서는 GPE 와 GPI 를 통해 계산한 정책이 서로 다른 선호를 가지는 태스크에 대해서 얼마나 잘 동작하는지를 테스트한다. 그림 7 에서는 우리 방법을 커피를 구하고 음식을 피하는 목표를 가지고 학습한 모델 프리 에이전트와 비교한다. GPE 와 GPI 를 활용한 에이전트가 얼마나 빨리 적절한 정책을 만들어내는지를 보자. 오브젝트를 피하는 방법은 학습한 적도 없는데 말이다. 물론 GPE 와 GPI 로 만들어낸 정책은 추후 학습을 통해 성능을 더 올리기 위한 초기 솔루션으로 사용될 수도 있다. 이는 모델 프리 에이전트의 최종 성능에 더 빨리 도달할 것이라는 의미이다.</p>
+<p><img src='../img/2020-10-27-Fast_reinforcmenet_learning_through_the_composition_of_behaviours/
+fig7.webp' alt='fig.7' width=800 /></p>
+<p>그림 7: GPE-GPI 에이전트는 훨씬 적은 학습 데이터를 가지고 모델 프리 방법보다 (Q-러닝) 좋은 성능을 보여준다. 여기서 태스크는 커피를 구하고 음식을 피하는 것이다. GPE-GPI 에이전트는 두 가지 정책을 학습했다, 하나는 커피를 구하는 정책, 다른 하나는 음식을 구하는 정책이다. 여기서는 오브젝트를 피하는 법을 배운 적도 없는데 그럭저럭 음식을 피하는 일을 해낸다. 그림자로 표시한 영역은 100번 수행하여 구한 '1' 표준편차 구간이다.</p>
+<p>그림 7 은 GPE 와 GPI 가 특정한 태스크에 대해서 보여주는 성능. 우리는 다른 많은 태스크에 대해서도 같은 에이전트를 테스트 해보았다. 그림 8 은 커피와 음식에 대한 상대적인 선호를 변화시키면서 모델 프리와 GPE-GPI 에이전트의 성능을 관찰한 것이다. 모델 프리 에이전트는 각 태스크에 대해서 별도로 초기부터 학습을 한 결과임을 상기하자. 반면에 두 가지 정책만을 학습한 GPE-GPI 에이전트는 모든 태스크에 대해서 빠르게 적응하였다.</p>
+<p><img src='../img/2020-10-27-Fast_reinforcmenet_learning_through_the_composition_of_behaviours/
+fig8.webp' alt='fig.8' width=800 /></p>
+<p>그림 8: GPE-GPI 에이전트가 여러 다른 태스크에 대해서 보이는 성능. 각 막대는 커피와 음식의 선호에 대한 여러 조합으로 만들어진 태스크에 대한 것이다. 그래프 하단의 그래디언트 색상은 선호의 조합을 나타낸다: 청색은 양의 가중치, 백색은 0 의 가중치, 적색은 음의 가중치를 의미한다. 따라서, 예를 들어서, 그래프의 양 끝은 한 오브젝트를 피하고 다른 오브젝트는 상관하지 않는 태스크이다. 반면, 중심에는 두 가지 오브젝트를 모두 똑같이 구하는 태스크이다. 에러 바는 10번 수핵에서 구한 '1' 표준편차이다.</p>
+<p>위의 실험은 GPE 와 GPI 에게 기대하는 성질을 보이기 위해서 설계한, 복잡한 요소가 없는 단순한 환경을 사용했다. 하지만 GPE 와 GPI 는 더 큰 환경에서도 활용되었다. 예를 들어서, 이전 논문에서 (<a href="http://proceedings.mlr.press/v80/barreto18a/barreto18a.pdf">여기</a>와 <a href="https://openreview.net/pdf?id=S1VWjiRcKX">여기</a>) 격자를 3차원 환경으로 바꾸었을  같은 전략이 어떻게 동작하는지를 보였다. 이 환경에서 에이전트는 1인칭 시점의 정보를 가진다. (<a href="https://www.youtube.com/watch?v=-dTnqfwTRMI&amp;feature=youtu.be">여기</a>와 <a href="https://www.youtube.com/watch?v=0afwHJofbB0&amp;feature=youtu.be">여기</a>에서 설명 비디오 참조) 또한 사족로봇 시뮬레이션에서 3 방향으로 이동하는 방법을 학습한 후에, GPE 와 GPI 으로 모든 방향으로 이동하도록 하였다. (이 <a href="https://papers.nips.cc/paper/9463-the-option-keyboard-combining-skills-in-reinforcement-learning">논문</a>과 <a href="https://www.youtube.com/watch?v=39Ye8cMyelQ&amp;feature=youtu.be">비디오</a> 참조)</p>
+<h3 id="gpe-gpi_1">GPE 와 GPI 의 연구 맥락</h3>
+<p>GPE 와 GPI 에 대한 연구는 각자의 연구 분야가 교차하는 영역이다. GPE 와 관련한 첫번째 연구는 successor representation 에 관한 것이었다. 이는 Dayan 의 1993년 <a href="https://www.mitpressjournals.org/doi/abs/10.1162/neco.1993.5.4.613?journalCode=neco">세미나 논문</a>에서 시작하였다. Dayan 의 논문은 인지과학에서 현재 아주 활발한 분야를 열었다 (더 읽을거리: "The successor representation in neuroscience) 최근, successor representation 은 강화학습 연구의 맥락에서 다시 등장하였는데 (<a href="https://papers.nips.cc/paper/6994-successor-features-for-transfer-in-reinforcement-learning">여기</a>와 <a href="https://arxiv.org/abs/1606.02396">여기</a> 링크), 여기서는 "successor features" 로 불리웠으며 마찬가지로 활발한 연구 영역이 되었다. (더 읽을거리: "GPE, successor features, and related approaches"). Successor features 는 <a href="">general value functions</a> 와 밀접하게 연관되어 있는데, 이 개념은 Sutton et al. 의 가정, 즉 연관이 있는 지식은 여러 예측의 형태로 표현될 수 있다에 기반해있다 (<a href="https://link.springer.com/chapter/10.1007/978-3-642-33093-3_30">여기</a>서 더욱 논의) Successor features 의 정의는 강화학습 연구의 <a href="https://ai.stanford.edu/~ang/papers/icml04-apprentice.pdf">다른 맥락</a>에서 독립적으로 출현했는데, 또한 보통은 심층 강화학습과 연관된 <a href="http://proceedings.mlr.press/v37/schaul15.pdf">최근의 접근법</a>과 또한 관련되어 있다.</p>
+<p>GPE 와 GPI 의 기원의 두 번째 연구 분야는 후자에 연관되어 있는데, 행동들을 구성하여 새로운 행동을 만들어내는 것과 관런되어 있다. 하부 컨트롤을 담당하는 탈중심화된 컨트롤러는 수년에 걸쳐서 여러번 나타났는데 (예, <a href="https://ieeexplore.ieee.org/document/1087032">Brooks, 1986</a>) 가치 함수를 이용한 그 구현은 적어도 1997년 <a href="https://www.computing.dcu.ie/~humphrys/PhD/index.html">Humphrys</a>와 <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.37.8338&amp;rep=rep1&amp;type=pdf">Karlsson</a> 의 박사 논문으로 거슬러 올라간다. GPI 는 또한 계층 강화학습과 밀접하게 관련되어 있는데, 그 초석은 1990년대와 2000년대 초반 <a href="https://papers.nips.cc/paper/714-feudal-reinforcement-learning">Dayan 과 Hinton</a>, <a href="https://papers.nips.cc/paper/1384-reinforcement-learning-with-hierarchies-of-machines">Parr 과 Russell</a>, <a href="https://www.sciencedirect.com/science/article/pii/S0004370299000521">Sutton, Precup 과 Singh</a>, 그리고 <a href="https://jair.org/index.php/jair/article/view/10266">Dietterich</a> 의 연구에 기반한다. 행동의 구성과 계층 강화학습 둘 모두 오늘날 활발한 연구 분야이다 (더 읽을거리: "GPI, hierarchical RL, and related approaches").</p>
+<p><a href="http://homes.sice.indiana.edu/natarasr/Papers/var-reward.pdf">Mehta et al.</a> 은 아마도 GPE 와 GPI 를 함께 사용한 첫번째 연구일 것이다. 비록 해당 시나리오에서 GPI 는 하나의 선택으로 줄어드는 것으로 생각했지만 말이다 (말하자면, 정책의 "이어붙이기"는 없다는 말이다.). 이 블로그 포스트에서 논의된 버전의 GPE 와 GPI 는 2016 년 처음 나올 때 <a href="https://www.jmlr.org/papers/volume10/taylor09a/taylor09a.pdf">전이학습</a> 을 촉진하기 위한 메커니즘으로 <a href="https://arxiv.org/abs/1606.05312">제안</a>되었다. 강화학습에서의 전이학습은 1992 년 <a href="https://link.springer.com/article/10.1007/BF00992700">Singh 의 연구</a>로 거슬러 올라간다. 해당 연구는 심층 강화학습의 맥락에서 최근 <a href="https://arxiv.org/abs/2009.07888">부활</a>을 맞이했고, 계속해서 활발한 연구분야로 이어지고 있다. (더 읽을거리: "GPE + GPI, transfer learning, and related approaches").
+이 연구들에 대한 더 많은 정보는 아래를 참조 바란다. 더 많은 읽을거리도 열거 해 놓았다.</p>
+<h3 id="_3">강화학습에 대한 조합적인 접근법</h3>
+<p>요약하자면, 모델 프리 에이전트는 새로운 상황에 쉽게 적응할 수 없다. 예를 들자면 전에 경험한 적이 없는 새로운 선호의 조합에 적응한다던지 말이다. 모델 기반의 에이전트는 새로운 상황에 적응할 수 있지만, 그렇게 하기 위해서는 전체 세상에 대한 모델을 우선 학습해야 한다. GPE 와 GPI 에 기반한 에이전트는 이를 절충한 솔루션을 제공할 수 있다: 세상에 대한 모델이 모델 기반 에이전트보다 훨씬 작더라도, 어떤 상황에도 빨리 적응하며 좋은 성능을 보일 수 있다.</p>
+<p>GPE 와 GPI 에 대한 특정한 경우를 살펴보았지만, 사실 이보다는 더 일반적인 개념이다. 추상적인 수준에서, GPE 와 GPI 를 사용하는 에이전트는 두 스텝으로 진행한다. 첫째, 새로운 태스크에 부딪혔을 때, 이렇게 묻는다: "알려진 태스크에 학습된 솔루션이 이 새로운 솔루션에 잘 동작할까?" 이는 GPE 이다. 그리고 나서, 이 평가에 기반해서, 에이전트는 이전 솔루션을 조합해서 새로운 태스크를 위한 솔루션을 만들어낸다 --이것이 GPI 이다. GPE 와 GPI 뒤에 숨겨진 메카니즘은 원리 그 자체 만큼 중요하지는 않다. 그리고 이러한 작업을 수행하기 위해서 대안을 찾는 것은 아주 흥분되는 연구 방향이 될 수 있다. 흥미롭게도, 행동 과학에서 새로운 연구는 인간이 다양한 태스크를 수행하는 시나리오에서 GPE 와 GPI 를 아주 닮은 원리를 따라서 결정을 내린다는 기초적인 증거를 제공한다.
+GPE 와 GPI 가 보여주는 빠른 적응은 강화학습 에이전트의 빠른 학습을 위한 믿을 만한 방법이 될 것이다. 더 일반적으로 얘기하자면, 문제를 유연하게 학습하는 새로운 접근법을 제공한다. 하나의 문제를 단독의 단편적인 문제로 간주하고 해결하려는 대신, 에이전트는 이를 더 작고 해결 가능한 하위 문제들로 나눈다. 그리고 나서 하위 문제들에 대한 솔루션은 재활용되고 재조합되어 전체 문제를 빠르게 해결할 수 있다. 강화학습에 대한 조합적인 접근법에서의 이 성과는 더욱 scalable 한 에이전트로 이어질 수 있을 것이다. 그리고 최종적으로, 이 에이전트들은 커피 때문에 지각하지 않을 것이다.
+<a href="https://www.pnas.org/content/early/2020/08/13/1907370117">여기에서</a> PNAS 에 게제된 논문을 읽을 수 있다.</p>
+<p>그림을 그려준 Jim Kynvin, Adam Cain and Dominic Barlow, 인지화학 자료들을 알려준 Kimberly Stachenfeld, 그리고 글을 작성하는 일을 도와준 Kelly Clancy 에게 감사한다.</p>
+<h3 id="_4">더 읽을거리</h3>
+<p>Improving Generalisation for Temporal Difference Learning: The Successor Representation. Peter Dayan. Neural Computation, 1993.</p>
+<p>Apprenticeship Learning Via Inverse Reinforcement Learning. Pieter Abbeel and Andrew Y. Ng. Proceedings of the International Conference on Machine learning (ICML), 2004.</p>
+<p>Horde: A Scalable Real-time Architecture for Learning Knowledge from Unsupervised Sensorimotor Interaction. Richard S. Sutton, Joseph Modayil, Michael Delp, Thomas Degris, Patrick M. Pilarski, Adam White. Proceedings of the International Conference on Autonomous Agents and Multiagent Systems (AAMAS), 2011.</p>
+<p>Multi-timescale Nexting in a Reinforcement Learning Robot. Joseph Modayil, Adam White, Richard S. Sutton. From Animals to Animats, 2012.</p>
+<p>Universal Value Function Approximators. Tom Schaul, Dan Horgan, Karol Gregor, David Silver. Proceedings of the International Conference on Machine learning (ICML), 2015.</p>
+<p>Deep Successor Reinforcement Learning. Tejas D. Kulkarni, Ardavan Saeedi, Simanta Gautam, Samuel J. Gershman. arXiv, 2017.</p>
+<p>Visual Semantic Planning Using Deep Successor Representations. Yuke Zhu, Daniel Gordon, Eric Kolve, Dieter Fox, Li Fei-Fei, Abhinav Gupta, Roozbeh Mottaghi, Ali Farhadi. Proceedings of the IEEE International Conference on Computer Vision (ICCV), 2017.</p>
+<p>Deep Reinforcement Learning with Successor Features for Navigation Across Similar Environments. Jingwei Zhang, Jost Tobias Springenberg, Joschka Boedecker, Wolfram Burgard. IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2017.</p>
+<p>Universal Successor Representations for Transfer Reinforcement Learning. Chen Ma, Junfeng Wen, Yoshua Bengio. arXiv, 2018.</p>
+<p>Eigenoption Discovery through the Deep Successor Representation. Marlos C. Machado, Clemens Rosenbaum, Xiaoxiao Guo, Miao Liu, Gerald Tesauro, Murray Campbell. International Conference on Learning Representations (ICLR), 2018.</p>
+<p>Successor Options: An Option Discovery Framework for Reinforcement Learning. Rahul Ramesh, Manan Tomar, Balaraman Ravindran. Proceedings of the  International Joint Conference on Artificial Intelligence (IJCAI), 2019.</p>
+<p>Successor Uncertainties: Exploration and Uncertainty in Temporal Difference Learning. David Janz, Jiri Hron, Przemysław Mazur, Katja Hofmann, José Miguel Hernández-Lobato, Sebastian Tschiatschek. Advances in Neural Information Processing Systems (NeurIPS), 2019.</p>
+<p>Successor Features Combine Elements of Model-Free and Model-based Reinforcement Learning. Lucas Lehnert, Michael L. Littman. arXiv, 2019.</p>
+<p>Count-Based Exploration with the Successor Representation. Marlos C. Machado, Marc G. Bellemare, Michael Bowling. Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 2020.</p>
+<h4 id="gpi-hierarchical-rl-and-related-approaches">GPI, hierarchical RL, and related approaches</h4>
+<p>A Robust Layered Control System for a Mobile Robot. R. Brooks. IEEE Journal on Robotics and Automation, 1986.</p>
+<p>Feudal Reinforcement Learning. Peter Dayan and Geoffrey E. Hinton. Advances in Neural Information Processing Systems (NIPS), 1992.</p>
+<p>Action Selection Methods Using Reinforcement Learning. Mark Humphrys. PhD thesis, University of Cambridge, Cambridge, UK, 1997.</p>
+<p>Learning to Solve Multiple Goals. Jonas Karlsson. PhD thesis, University of Rochester, Rochester, New York, 1997.</p>
+<p>Reinforcement Learning with Hierarchies of Machines. Ronald Parr and Stuart J. Russell. Advances in Neural Information Processing Systems (NIPS), 1997.</p>
+<p>Between MDPs and Semi-MDPs: A Framework for Temporal Abstraction in Reinforcement Learning. Richard S.Sutton, DoinaPrecup, Satinder Singh. Artificial Intelligence, 1999.</p>
+<p>Hierarchical Reinforcement Learning with the MAXQ Value Function Decomposition. T. G. Dietterich. Journal of Artificial Intelligence Research, 2000.</p>
+<p>Multiple-Goal Reinforcement Learning with Modular Sarsa(O). Nathan Sprague and  Dana Ballard. Proceedings of the International Joint Conference on Artificial Intelligence (IJCAI), 2003.</p>
+<p>Q-decomposition for Reinforcement Learning Agents. Stuart J. Russell and Andrew Zimdars.  Proceedings of the International Conference on Machine Learning (ICML), 2003.</p>
+<p>Compositionality of Optimal Control Laws. E. Todorov. Advances in Neural Information Processing Systems (NIPS), 2009.</p>
+<p>Linear Bellman combination for control of character animation. M. da Silva, F. Durand, and J. Popovic. ACM Transactions on Graphics, 2009.</p>
+<p>Hierarchy Through Composition with Multitask LMDPS. A. M. Saxe, A. C. Earle, and B. Rosman. Proceedings of the International Conference on Machine Learning (ICML), 2017.</p>
+<p>Hybrid Reward Architecture for Reinforcement Learning. Harm van Seijen, Mehdi Fatemi, Joshua Romoff, Romain Laroche, Tavian Barnes, and Jeffrey Tsang. Advances in Neural Information Processing Systems (NIPS), 2017.</p>
+<p>Feudal Networks for Hierarchical Reinforcement Learning. Alexander Sasha Vezhnevets, Simon Osindero, Tom Schaul, Nicolas Heess, Max Jaderberg, David Silver, Koray Kavukcuoglu.  Proceedings of the International Conference on Machine Learning (ICML), 2017.</p>
+<p>Composable Deep Reinforcement Learning for Robotic Manipulation. T. Haarnoja, V. Pong, A. Zhou, M. Dalal, P. Abbeel, and S. Levine. IEEE International Conference on Robotics and Automation (ICRA), 2018.</p>
+<p>Composing Value Functions in Reinforcement Learning. Benjamin Van Niekerk, Steven James, Adam Earle, Benjamin Rosman. Proceedings of the International Conference on Machine Learning (ICML), 2019.</p>
+<p>Planning in Hierarchical Reinforcement Learning: Guarantees for Using Local Policies. Tom Zahavy, Avinatan Hasidim, Haim Kaplan, Yishay Mansour. International Conference on Algorithmic Learning Theory (ALT), 2020.</p>
+<h4 id="gpe-gpi-transfer-learning-and-related-approaches">GPE + GPI, transfer learning, and related approaches</h4>
+<p>Transfer of Learning by Composing Solutions of Elemental Sequential Tasks. Satinder Singh. Machine Learning, 1992.</p>
+<p>Transfer Learning for Reinforcement Learning Domains: A Survey. Matthew E. Taylor and Peter Stone. Journal of Machine Learning Research, 2009.</p>
+<p>Transfer in Variable-Reward Hierarchical Reinforcement Learning. Neville Mehta, Sriraam Natarajan, Prasad Tadepalli, Alan Fern. Machine Learning, 2008.</p>
+<p>Learning and Transfer of Modulated Locomotor Controllers. Nicolas Heess, Greg Wayne, Yuval Tassa, Timothy Lillicrap, Martin Riedmiller, David Silver. arXiv, 2016.</p>
+<p>Learning to Reinforcement Learn. Jane X. Wang, Zeb Kurth-Nelson, Dhruva Tirumala, Hubert Soyer, Joel Z. Leibo, Remi Munos, Charles Blundell, Dharshan Kumaran, Matt Botvinick. arXiv, 2016.</p>
+<p>RL2: Fast Reinforcement Learning via Slow Reinforcement Learning. Yan Duan, John Schulman, Xi Chen, Peter L. Bartlett, Ilya Sutskever, Pieter Abbeel. arXiv, 2016.</p>
+<p>Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks. Chelsea Finn, Pieter Abbeel, Sergey Levine. Proceedings of the International Conference on Machine Learning (ICML), 2017.</p>
+<p>Successor Features for Transfer in Reinforcement Learning. André Barreto, Will Dabney, Rémi Munos, Jonathan J. Hunt, Tom Schaul, Hado van Hasselt, David Silver.  Advances in Neural Information Processing Systems (NIPS), 2017.</p>
+<p>Transfer in Deep Reinforcement Learning Using Successor Features and Generalised Policy Improvement. André Barreto, Diana Borsa, John Quan, Tom Schaul, David Silver, Matteo Hessel, Daniel Mankowitz, Augustin Žídek, Rémi Munos. Proceedings of the International Conference on Machine Learning (ICML), 2018.</p>
+<p>Composing Entropic Policies Using Divergence Correction. Jonathan Hunt, André Barreto, Timothy Lillicrap, Nicolas Heess. Proceedings of the International Conference on Machine Learning (ICML), 2019.</p>
+<p>Universal Successor Features Approximators. Diana Borsa, André Barreto, John Quan, Daniel Mankowitz, Rémi Munos, Hado van Hasselt, David Silver, Tom Schaul. International Conference on Learning Representations (ICLR), 2019.</p>
+<p>The Option Keyboard: Combining Skills in Reinforcement Learning. André Barreto, Diana Borsa,  Shaobo Hou, Gheorghe Comanici, Eser Aygün, Philippe Hamel, Daniel Toyama, Jonathan J. Hunt, Shibl Mourad, David Silver, Doina Precup. Advances in Neural Information Processing Systems (NeurIPS), 2019.</p>
+<p>Transfer Learning in Deep Reinforcement Learning: A Survey. Zhuangdi Zhu, Kaixiang Lin, Jiayu Zhou, arXiv, 2020.</p>
+<p>Fast Task Inference with Variational Intrinsic Successor Features. Steven Hansen, Will Dabney, André Barreto, Tom Van de Wiele, David Warde-Farley, Volodymyr Mnih. International Conference on Learning Representations (ICLR), 2020.</p>
+<p>Fast Reinforcement Learning with Generalized Policy Updates. André Barreto, Shaobo Hou, Diana Borsa, David Silver, Doina Precup. Proceedings of the National Academy of Sciences, 2020.</p>
+<p>The successor representation in neuroscience</p>
+<p>The Hippocampus as a Predictive Map. Kimberly Stachenfeld, Matthew Botvinick, Samuel Gershman. Nature Neuroscience, 2017.</p>
+<p>The Successor Representation in Human Reinforcement Learning. I. Momennejad, E. M. Russek, J. H. Cheong, M. M. Botvinick, N. D. Daw, S. J. Gershman.  Nature Human Behaviour, 2017.</p>
+<p>Predictive Representations Can Link Model-Based Reinforcement Learning to Model-Free Mechanisms. E. Russek, I. Momennejad, M. M. Botvinick, S. J. Gershman, N. D. Daw. PLOS Computational Biology, 2017.</p>
+<p>The Successor Representation: Its Computational Logic and Neural Substrates. Samuel J. Gershman. Journal of Neuroscience, 2018.</p>
+<p>Better Transfer Learning with Inferred Successor Maps. Tamas J. Madarasz, Timothy E. Behrens. Advances in Neural Information Processing Systems (NeurIPS), 2019.</p>
+<p>Multi-Task Reinforcement Learning in Humans. Momchil S. Tomov, Eric Schulz, and Samuel J. Gershman. bioRxiv, 2019.</p>
+<p>A neurally plausible model learns successor representations in partially observable environments. Eszter Vertes, Maneesh Sahani. Advances in Neural Information Processing Systems (NeurIPS), 2019.</p>
+<p>Neurobiological Successor Features for Spatial Navigation. William de Cothi, Caswell Barry. Hippocampus, 2020.</p>
+<p>Linear Reinforcement Learning: Flexible Reuse of Computation in Planning, Grid Fields, and Cognitive Control. Payam Piray, Nathaniel D. Daw. bioRxiv, 2020.</p>
+                
+                  
+                
+              
+              
+                
+
+  
+
+
+  <h2 id="__comments">Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>var disqus_config=function(){this.page.url="http://jonqkim.github.io/Deep%20Mind/2020-11-10-Fast_reinforcmenet_learning_through_the_composition_of_behaviours.html",this.page.identifier="Deep%20Mind/2020-11-10-Fast_reinforcmenet_learning_through_the_composition_of_behaviours.html"};window.addEventListener("load",function(){var e=document,i=e.createElement("script");i.src="//jongkyu-kim.disqus.com/embed.js",i.setAttribute("data-timestamp",+new Date),(e.head||e.body).appendChild(i)})</script>
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="2020-09-27-Understanding_Agent_Cooperation.html" title="Understanding Agent Cooperation - 번역" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Understanding Agent Cooperation - 번역
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
+      <script src="../assets/javascripts/bundle.aa3f9871.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
