@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>http://jonqkim.github.io/index.html</loc>
-     <lastmod>2020-11-10</lastmod>
+     <lastmod>2020-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://jonqkim.github.io/Deep%20Mind/2020-09-27-Understanding_Agent_Cooperation.html</loc>
-     <lastmod>2020-11-10</lastmod>
+     <lastmod>2020-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>http://jonqkim.github.io/Deep%20Mind/2020-11-10-Fast_reinforcmenet_learning_through_the_composition_of_behaviours.html</loc>
-     <lastmod>2020-11-10</lastmod>
+     <lastmod>2020-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
