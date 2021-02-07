@@ -507,12 +507,7 @@ So we need to include <span class="arithmatex">\(\alpha\)</span> as another axis
     allowfullscreen></iframe></p>
 <p>Now we found the graph is not simple that it is not easy to find the optimal <span class="arithmatex">\(\theta\)</span> that makes the loss minimum.
 In order to find the <span class="arithmatex">\(\theta\)</span>, let us draw the gradient of meta-object loss over <span class="arithmatex">\(\theta\)</span> shown as below.</p>
-<div class="arithmatex">\[ \begin{equation}
-\begin{split}
-\nabla_{\theta} L_{M} &amp;= (\theta - \alpha \theta^3)^3(1 - 3 \alpha \theta^2) 
-&amp;+ (1-\alpha)^2(\theta-1)
-\end{split}
-\end{equation} \]</div>
+<p><span class="arithmatex">\(\nabla_{\theta} L_{M} = (\theta - \alpha \theta^3)^3(1 - 3 \alpha \theta^2) + (1-\alpha)^2(\theta-1)\)</span></p>
 <p>Below is the surface visualization of the equation above. 
 The intersection of the surface and the transprant plane where <span class="arithmatex">\(z=0\)</span> makes curvese that make the meta-objective loss minimum. 
 We can see the optimal <span class="arithmatex">\(\theta\)</span> easier than in the previous visualization. 
