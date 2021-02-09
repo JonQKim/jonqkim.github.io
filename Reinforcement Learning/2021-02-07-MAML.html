@@ -417,30 +417,30 @@ Then we set very simple loss functions for the two tasks as below.</p>
 Their visualization are as below.</p>
 <iframe width="640" height="640" frameborder="0" scrolling="no" src="//plotly.com/~jonqkim/134.embed"></iframe>
 
-<p>We update the parameters, <span class="arithmatex">\(\theta_{0}\)</span> and <span class="arithmatex">\(\theta_{1}\)</span> with gradient descent based on pre-defined learning rate, <span class="arithmatex">\(\alpha\)</span>.
-$$ \begin{equation}
+<p>We update the parameters, <span class="arithmatex">\(\theta_{0}\)</span> and <span class="arithmatex">\(\theta_{1}\)</span> with gradient descent using pre-defined learning rate, <span class="arithmatex">\(\alpha\)</span>.</p>
+<div class="arithmatex">\[\begin{equation}
 \begin{split}
-\theta^{'}<em>0  &amp;= \theta - \alpha \nabla</em>{\theta} L_{T_0}(f_{\theta}) = \theta - \alpha \theta \
- &amp;= (1 - \alpha) \theta \
-\theta^{'}<em>1  &amp;= \theta - \alpha \nabla</em>{\theta} L_{T_1}(f_{\theta}) = \theta - \alpha (\theta - 1) \
- &amp;= (1 - \alpha) \theta + \alpha \
+\theta^{'}_{0} &amp;= \theta - \alpha \nabla_{\theta} L_{T_0}(f_{\theta}) = \theta - \alpha \theta \\
+&amp;= (1 - \alpha) \theta\\
+\theta^{'}_1 &amp;= \theta - \alpha \nabla_{\theta} L_{T_1}(f_{\theta}) = \theta - \alpha (\theta - 1)\\
+&amp;= (1 - \alpha) \theta + \alpha
 \end{split}
-\end{equation}$$</p>
-<p>We update the loss functions using the updated  <span class="arithmatex">\(\theta\)</span> parameters.
+\end{equation}\]</div>
+<p>We update the loss functions using the updated <span class="arithmatex">\(\theta\)</span> parameters.
 $$ \begin{equation}
 \begin{split}
 L_{T_0} &amp;= \frac{1}{2} (1-\alpha)^2\theta^2 \
 L_{T_1} &amp;= \frac{1}{2} (1-\alpha)^2(\theta-1)^2
 \end{split}
-\end{equation} $$</p>
+\end{equation}$$</p>
 <p>Finally, we sum up the updated losses to get the loss for meta-objective.
 Remeber that the goal of meta-learning is to find a <span class="arithmatex">\(\theta\)</span> that minimizes the meta-objective loss.
 $$ \begin{equation}
 \begin{split}
-L_{M} &amp;= \frac{1}{2} (1-\alpha)^2 { \theta^2 + (\theta-1)^2 }\
+L_{M} &amp;= \frac{1}{2} (1-\alpha)^2 { \theta^2 + (\theta-1)^2 } \
 &amp;= (1-\alpha)^2 { (\theta-\frac{1}{2})^2 + \frac{1}{4} }
 \end{split}
-\end{equation} $$</p>
+\end{equation}$$</p>
 <p>From the equation, <span class="arithmatex">\(\alpha\)</span> scales the graph in <span class="arithmatex">\(y\)</span> axis but does not alter the scale or position in <span class="arithmatex">\(x\)</span> axis.
 The graph of the equation given <span class="arithmatex">\(\alpha = 0.5\)</span> is shown below.</p>
 <p><iframe
