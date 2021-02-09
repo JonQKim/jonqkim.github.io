@@ -415,8 +415,13 @@ Then we set very simple loss functions for the two tasks as below.</p>
 <span class="arithmatex">\(L_{T_1} = \frac{1}{2} (\theta - 1)^2\)</span></p>
 <p>The two equations have the same shape and the only difference is shift by 1 in <span class="arithmatex">\(\theta\)</span> axis.
 Their visualization are as below.</p>
-<iframe width="640" height="640" frameborder="0" scrolling="no" src="//plotly.com/~jonqkim/134.embed"></iframe>
-
+<p><iframe
+    scrolling="no"
+    width="500px"
+    height="500"
+    src="../img/2021-02-07-MAML/figure_0.html?fullscreen=kiosk"
+    frameborder="0"
+    allowfullscreenbbbb></iframe></p>
 <p>We update the parameters, <span class="arithmatex">\(\theta_{0}\)</span> and <span class="arithmatex">\(\theta_{1}\)</span> with gradient descent using pre-defined learning rate, <span class="arithmatex">\(\alpha\)</span>.</p>
 <div class="arithmatex">\[\begin{equation}
 \begin{split}
@@ -444,11 +449,12 @@ L_{M} &amp;= \frac{1}{2} (1-\alpha)^2 { \theta^2 + (\theta-1)^2 } \
 <p>From the equation, <span class="arithmatex">\(\alpha\)</span> scales the graph in <span class="arithmatex">\(y\)</span> axis but does not alter the scale or position in <span class="arithmatex">\(x\)</span> axis.
 The graph of the equation given <span class="arithmatex">\(\alpha = 0.5\)</span> is shown below.</p>
 <p><iframe
-    width="480px"
-    height="480px"
-    src="https://plotly.com/~jonqkim/136.embed"
+    scrolling="no"
+    width="500px"
+    height="500"
+    src="../img/2021-02-07-MAML/figure_1.html?fullscreen=kiosk"
     frameborder="0"
-    allowfullscreen></iframe></p>
+    allowfullscreenbbb></iframe></p>
 <p>Becasue we set simple task loss functions, the meta-objective loss function is also very simple. 
 We easily find the optimal <span class="arithmatex">\(\theta\)</span> to be 0.5 even regardless of <span class="arithmatex">\(\alpha\)</span> in this case. 
 And the optimal <span class="arithmatex">\(\theta\)</span> is intuitively understood because we have two loss functions of an identical shape and the middle point in <span class="arithmatex">\(\theta\)</span> axis is 0.5.</p>
@@ -463,23 +469,24 @@ So now we set a slightly more complicated task loss function.</p>
 <p><span class="arithmatex">\(L_{T_0} = \frac{1}{4} \theta^4\)</span> <br><span class="arithmatex">\(L_{T_1} = \frac{1}{2} (\theta - 1)^2\)</span></p>
 <p>Below are their visualization in graph.</p>
 <p><iframe
-    width="480px"
-    height="640px"
-    src="https://plotly.com/~jonqkim/138.embed"
+    scrolling="no"
+    width="500px"
+    height="660"
+    src="../img/2021-02-07-MAML/figure_2.html?fullscreen=kiosk"
     frameborder="0"
     allowfullscreen></iframe></p>
 <p>We do the same steps as in case 1.
 The updated parameters <span class="arithmatex">\(\theta'_{0}\)</span> and <span class="arithmatex">\(\theta'_{1}\)</span> are as below.
-(<span class="arithmatex">\(\theta^{'}_1\)</span> did not change from case 1 but was written again for easier track of calculation.)
-$$ \begin{equation}
+(<span class="arithmatex">\(\theta^{'}_1\)</span> did not change from case 1 but was written again for easier track of calculation.)</p>
+<div class="arithmatex">\[\begin{equation}
 \begin{split}
-\theta^{'}<em>0  &amp;= \theta - \alpha \nabla</em>{\theta} L_{T_0}(f_{\theta})\
- &amp;= \theta - \alpha \theta^3 \
-\theta^{'}<em>1  &amp;= \theta - \alpha \nabla</em>{\theta} L_{T_1}(f_{\theta})\
- &amp;= \theta - \alpha (\theta - 1) \
- &amp;= (1 - \alpha) \theta + \alpha \
+\theta^{'}_0  &amp;= \theta - \alpha \nabla_{\theta} L_{T_0}(f_{\theta})\\
+ &amp;= \theta - \alpha \theta^3 \\
+\theta^{'}_1  &amp;= \theta - \alpha \nabla_{\theta} L_{T_1}(f_{\theta})\\
+ &amp;= \theta - \alpha (\theta - 1) \\
+ &amp;= (1 - \alpha) \theta + \alpha \\
 \end{split}
-\end{equation}$$</p>
+\end{equation}\]</div>
 <p>Then, we update the task loss functions by replacing <span class="arithmatex">\(\theta\)</span> with the updated <span class="arithmatex">\(\theta'_{0}\)</span> and <span class="arithmatex">\(\theta'_{1}\)</span>.
 $$ \begin{equation}
 \begin{split}
@@ -500,9 +507,10 @@ This time, <span class="arithmatex">\(\alpha\)</span> is involved not in a simpl
 So we need to include <span class="arithmatex">\(\alpha\)</span> as another axis and draw the loss not as a line but as a surface.
 (In the fiture below, you can hover your mouse pointer over the surface to see graphs drawn by fixing <span class="arithmatex">\(\theta\)</span> or <span class="arithmatex">\(\alpha\)</span>.)</p>
 <p><iframe
-    width="640px"
-    height="640px"
-    src="https://plotly.com/~jonqkim/166.embed"
+    scrolling="no"
+    width="660px"
+    height="660"
+    src="../img/2021-02-07-MAML/figure_3.html?fullscreen=kiosk"
     frameborder="0"
     allowfullscreen></iframe></p>
 <p>Now we found the graph is not simple that it is not easy to find the optimal <span class="arithmatex">\(\theta\)</span> that makes the loss minimum.
@@ -515,9 +523,10 @@ And we see strong dependency of the optimal <span class="arithmatex">\(\theta\)<
 <p>In case 2, we changed just one task loss function from <span class="arithmatex">\(\theta^2\)</span> to <span class="arithmatex">\(\theta^4\)</span>. 
 But we see meta-objective loss surface that is much more complicated both over <span class="arithmatex">\(\theta\)</span> and <span class="arithmatex">\(\alpha\)</span>.</p>
 <p><iframe
-    width="640px"
-    height="640px"
-    src="https://plotly.com/~jonqkim/164.embed"
+    scrolling="no"
+    width="660px"
+    height="660"
+    src="../img/2021-02-07-MAML/figure_4.html?fullscreen=kiosk"
     frameborder="0"
     allowfullscreen></iframe></p>
 <h3 id="review">Review</h3>
