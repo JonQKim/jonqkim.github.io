@@ -1,0 +1,572 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <link rel="canonical" href="http://jonqkim.github.io/Probability%20Theory/2021-04-11-Dicing%20with%20the%20Unknown.html">
+      
+      
+        <meta name="author" content="Jongkyu Kim">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-6.0.1">
+    
+    
+      
+        <title>Dicing with Unknown - KR - Rage Against Deep Learning</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.38780c08.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f72e892.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="http://jonqkim.github.io/" title="Rage Against Deep Learning" class="md-header-nav__button md-logo" aria-label="Rage Against Deep Learning">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            Rage Against Deep Learning
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Dicing with Unknown - KR
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="http://jonqkim.github.io/" title="Rage Against Deep Learning" class="md-nav__button md-logo" aria-label="Rage Against Deep Learning">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    Rage Against Deep Learning
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Deep Mind
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Deep Mind" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        <span class="md-nav__icon md-icon"></span>
+        Deep Mind
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Deep%20Mind/2020-09-27-Understanding_Agent_Cooperation.html" title="Understanding Agent Cooperation - KR" class="md-nav__link">
+      Understanding Agent Cooperation - KR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Deep%20Mind/2020-11-10-Fast_reinforcmenet_learning_through_the_composition_of_behaviours.html" title="Fast reinforcement learning through the composition of behaviours - KR" class="md-nav__link">
+      Fast reinforcement learning through the composition of behaviours - KR
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      Probability Theory
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Probability Theory" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        Probability Theory
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Dicing with Unknown - KR
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
+    <a href="2021-04-11-Dicing%20with%20the%20Unknown.html" title="Dicing with Unknown - KR" class="md-nav__link md-nav__link--active">
+      Dicing with Unknown - KR
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    두 가지의 불확실성
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    두 가지의 확률
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    두 가지의 통계학
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    그리고 두 가지의 통계학자
+  </a>
+  
+    <nav class="md-nav" aria-label="그리고 두 가지의 통계학자">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    달라 보이지만 사실은 같은 이야기
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Reinforcement Learning
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Reinforcement Learning" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Reinforcement Learning
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Reinforcement%20Learning/2021-02-07-MAML.html" title="Visualizing MAML with simple losses" class="md-nav__link">
+      Visualizing MAML with simple losses
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    두 가지의 불확실성
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    두 가지의 확률
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    두 가지의 통계학
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    그리고 두 가지의 통계학자
+  </a>
+  
+    <nav class="md-nav" aria-label="그리고 두 가지의 통계학자">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    달라 보이지만 사실은 같은 이야기
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  <h1>Dicing with Unknown - KR</h1>
+                
+                <p>2021-08-20</p>
+<blockquote>
+<p>역자주 <br> <br>
+2004 년 통계학 격월간지 Significance 에 실린 글로서, 확률 값을 확정된 것으로 보지 않고 정보를 얻어가면서 불확실성을 줄여나가는 방식으로 다루는 Bayesian 의 개념을 설명하기 위해 aleatory 와 epistemic 이라는 두 가지 다른 확률 개념을 예를 들어서 설명하고 있습니다. 앞의 개념 이야기가 눈에 들어오지 않는다면 가장 끝의 예시부터 읽는 것도 좋은 방법일 것 같습니다.<br> <br>
+원문 링크: https://rss.onlinelibrary.wiley.com/doi/full/10.1111/j.1740-9713.2004.00050.x</p>
+</blockquote>
+<p><strong>불확실한 것은 너무나 많다, 토니 오헤이건의 이야기이다. 그 중에는 단순히 알지 못하는 것도 있고, 알아낼 방법이 아예 없는 것도 있다. 이 글에서는 두 가지의 불확실성에 대해서, 그리고 그 둘의 구분이 확률과 통계학의 근간에 어떤 영향을 미쳤는지에 대해서 이야기한다.</strong></p>
+<h3 id="_1">두 가지의 불확실성</h3>
+<p>세상에는 그저 몰라서 불확실한 것들이 있다. 그리고 원론적으로 이러한 불확실성은 더 많은 정보를 얻어서 줄일 수 있다. 또 다른 불확실성은 무작위성에 의해서 발생하는데, 이는 아무리 많은 정보를 모아도 여전히 예측 불가하다; 이는 알 수 없음이다. 철학자들은 이 두가지의 불확실성에 대해서 토론해 왔는데, 각각을 (알지 못해서 발생하는) epistemic 불확실성, 그리고 (무작위성에서 발생하는) aleatory 불확실성으로 이름 붙였다.</p>
+<p>Aleatory 불확실성의 사례들은 확률 이론을 공부한 학생들에게는 익숙한데, 주사위를 던지거나 잘 섞인 카드뭉치에서 카드를 뽑는 것과 같은 경우이다. 통계에서 aleatory 불확실성은 우리가 다루는 거의 모든 데이터에 존재하는데, 이는 모집단의 무작위한 성질, 그리고 무작위하게 발생하는 측정 오차에 기인한다.</p>
+<p>Epistemic 불확실성의 예시는 우리 주위에 어디서나 찾아볼 수 있다. 나는 아연 원자의 무게도, 파리의 인구수도, 런던의 템스강이 1600-1601 년의 겨울에 얼어붙었는지도 알지 못한다. 최소한 앞의 두 불확실성은 적당한 참고 서적을 찾아서라도 해결할 수 있다. 템스강의 1600-1601 년은 정보를 얻을 수 있는 출처가 없을 수도 있다. 하지만 원론적으로 이 불확실성은 역사를 살펴서 해결할 수도 있다. 어떤 질문에 대한 epistemic 불확실성은 사람에 따라 다르다. 예를 들어서 나는 내 키에 대해서 무시할 수 있을 만큼 작은 불확실성을 가지고 있다. 나를 직접 본 사람이라면 어느 정도 내 키를 추정할 수 있지만 확신할 수는 없다. 내가 그저 영국 남자라는 정도만 아는 사람이라면 불확실성은 더 커진다.</p>
+<p>Aleatory 불확실성과 epistemic 불확실성의 구분은, 어떤 불확실성을 줄이는 것이 가능한지를 알아내야 하는 많은 분야에서 아주 중요하다. 그리고 특히  통계학자에게 이것이 근본적인 문제라는 것은 너무도 당연하다. 그들에게 무작위성과 불확실성은 존재의 이유이기 때문이다.</p>
+<p>통계학 이론은 불확실성을 확률을 통해 표현하는 방식이다. 1에 가까운 확률은 사건의 발생이 거의 확실함을 의미한다. 반대로 0에 가까운 확률은 사건이 발생하지 않을 것이 거의 확실함을 의미한다. 이 양 극단에서 1/2 의 확률에 가까이 갈수록, 불확실성은 증가한다. 하지만 여기서 바로 통계학의 주요 이론을 둘로 나누는 구분과 만나게 된다: frequentist 와 Bayesian 이론 말이다. 통계 이론을 두 가지 학파로 나누는 한 가지 특징은, frequentists 는 aleatory uncertainty 를 확률로 표현하거나 측정할 수 있다는 것을 받아들이지 않지만 Bayesian 은 어떠한 불확실성도 확률로 기꺼이 수치화한다는 것이다.</p>
+<h3 id="_2">두 가지의 확률</h3>
+<p>좀더 깊이 들어가보면, 이 합치되지 않는 관점의 근본 원인은 확률의 의미가 무엇인가에 있다. 교육 과정에서 처음 확률을 만날 때는 대개 aleatory 불확실성을 통해 그 의미를 배운다. 주사위 던지기나 동전 던지기처럼 익숙한 게임을 통해서 말이다. 그러한 학습 방법에서 확률은 장기 시행을 통한 무한에 가까운 반복 끝에 얻어지고, 이것이 frequency 에 대한 확률적 정의로 알려져 있다. 무작위한 시행의 특징은, 적어도 개념적으로는, 이렇게 무한히 반복 가능하다는 것이다. 그러나 Epistemic 불확실성은 일반적으로 그렇지 않다.</p>
+<p>확률에 epistemic 불확실성의 의미까지 포함시키려면, 지금과는 다른 정의가 필요하다.</p>
+<p>Bayesian 통계학에서 어떤 명제가 참일 확률은 그 명제에 대한 믿음의 정도를 의미한다. 일상 생활에서 "사건" 대신 "가정" 이라는 단어를 사용하는 상황을 떠올려보자. (가정은 참일수도 거짓일 수도 있는 명제이고, 이벤트는 일어날 수도, 그렇지 않을 수도 있는 무언가를 의미한다.) 명제는 단순히 이벤트가 발생할 것이라고 주장할 수도 있지만, epistemic 불확실성을 가진 문장을 가리킬 수도 있다.</p>
+<p>'믿음의 정도' 로 확률을 이해하는 방법은 때로는 개인적인 혹은 주관적인 확률을 의미힌다. 왜냐하면 이미 언급했듯이 어떤 명제는 사람에 따라 다른 불확실성을 가질 수 있기 때문이다. 이게 바로 확률에 대한 "주관적인" 접근이다. Frequentist 이론을 따르는 사람들은 확률을 가장 객관적인 무엇인가로 생각하지만 말이다. Bayesian 은 줄기차게 이 정의를 고수해왔고, 그들의 방법이 frequnentist 들의 practice, 아니면 실제로 과학적인 practice 에 비해 주관적으로 느껴지지 않는 수준까지 질문해왔다. 하지만 그러한 논쟁은 이 글의 범위를 벗어난다!</p>
+<h3 id="_3">두 가지의 통계학</h3>
+<p>확률에서 frequentist 의 의미를 보면, 통계 모델에서 파라미터들의 불확실성은 항상 epistemic 하다는 것을 알고 있는 것으로 충분하다. 예를 들어서 만약 아연원자의 무게를 실험적으로 측정하는 실험을 하고 있다면, 알지 못하는 파라미터는 원자의 무게이다. 아연을 무작위로 선택된 요소로 생각할 수는 없는 것이다. 사실 내가 알고 싶어한는 것은 아연에 관한 것이다. 비슷한 방법으로, 거의 모든 통계 분석은 파라미터를 알고자 하는 것이고, epistemic 불확실성을 줄이는 것이다. frequentist 통계학자들은 그 불확실성을 확률로 수치화하는 작업을 하지도 않고 할 수도 없기 때문에, 전통적인 통계 추정은 (significance test 나 confidence interval 과 같은) 파라미터에 대해서 확률적인 가정을 절대로 하지 않는다.</p>
+<p>하지만 그와 같은 전통적인 추정을 받아들이는 사람들은 거의 예외 없이 파라미터를 확률적으로 해석한다. 만약 null hypothesis 가 p-value 0.05 로 기각된다면, null hypothesis 가 참일 확률은 0.05 밖에 안된다고 오해되는 경우가 많다. (3.2, 5.7) 구간이 어떤 파라미터에 대해서 95% 의 신뢰 구간을 가진다면, 그 해석은 파라미터가 3.2 와 5.7 사이에 놓일 확률은 95% 라고 해석되는 일은 극히 흔하다. 이러한 해석이 틀리다는 사실을 이해하기 위해서, 파라미터에 대한 불확실성은 epistemic 하다는 것을 깨닫는 것으로 충분하다.</p>
+<p>P-value 0.05 와 신뢰도 0.95 는 데이터에 대한 aleatory 확률적인 기술이다. p-value 는 반복적인 샘플링에서 null hypothesis 가 참이라면 우리는 실험에서 5%를 기각할 것이라는 의미이다. (샘플링은 분석하려는 종류의 데이터셋에서 정해지지 않은 만큼의 수열을 만드는 것이다.) 신뢰구간은 이 신뢰구간이 데이터셋에서 만든 동일한 무한 수열에서 계산했다면, 95% 구간은 파라미터의 참 값을 포함할 것이라는 의미이다.</p>
+<p>둘 중 어느 것도 null hypothesis 가 참일 확률을 이야기하거나, 파라미터가 구간에 포함될 확률을 이야기하지 않는다. 우리가 단 하나의 데이터셋에만 국한한다면, 문제에 무작위성은 없고, 어떤 frequentist 확률도 다룰 필요가 없다.</p>
+<p>반면에, Bayesian inference 는 파라미터에 대해 확률적인 기술을 한다. 그렇게 할 수 있는 이유는 파라미터의 epistemic 불확실성은 Bayesian 의 personal probability 에 의해서 수치화될 수 있기 때문이다. 사실 Bayesian inference 는 데이터를 추가하면 파라미터의 불확실성이 prior 불확실성에서 posterior 불확실성으로 어떻게 바뀌는지 (보통은 줄이는지를) 설명한다. Significance test 의 Bayesian 적인 동치는 null hypothesis 가 참일 확률을 주장한다. 같은 방법으로, 신뢰 구간의 Bayesian 적인 설명은 (보통 credible 구간이라고 부르는) frequentist 신뢰구간이 자주 잘못 설명하는 부분을 정확히 기술한다.</p>
+<h3 id="_4">그리고 두 가지의 통계학자</h3>
+<p>개인적인 이야기를 하자면, 내 커리어에서 나는 두 종류의 통계학자 모두에 속해왔다. 젊은 통계학자 시절 Bayesian 방식이 옳다고 나를 설득하는 과학자들 때문에 나는 데이터를 분석하고 frequentist 테스트와 신뢰 구간을 작성해왔다. 이를 frequentist inferences 로 잘못 이해하는 과학자들을 설득하기는 아주 어려웠다. 그 이유는 내게는 아주 당연해 보였는데, 정확한 이해가 실제로 그들에게 도움이 되는 일이 없었기 때문이다. Frequentist inferences 는 파라미터를 간접적으로만 다루고, 반복된 샘플링으로만 설명될 수 있다. Bayesian inferences 는 직접적으로 과학자들의 질문에 답변하는데, 과학자들이 알고 싶어하는 파라미터에 대해 애매한 부분이 없이 설명하기 때문이다.</p>
+<p>모든 통계학자들은 frequentist 와 Bayesian 이론에 기반한 통계학의 차이를 이해해야 하고, 모든 실무자들은 둘 사이에 선택을 해야 한다. (적어도 겉으로 드러나지 않더라도 말이다.) 그러면 무엇을 알지 못하는 것인지 아니면 알 수 없는 것인지, 불확실성이 근본적으로 예상 불가하여 발생하는지 아니면 단순히 지식의 부족해서 인지가 논쟁의 중심에 있음이 드러나게 된다.</p>
+<hr />
+<h4 id="_5">달라 보이지만 사실은 같은 이야기</h4>
+<p>보통 코인을 던지면 앞면이 나올 확률은 0.5 이다. 만약에 주머니에 포커 칩들이 들어있고, 알고 있는 것은 그 안에 붉은색과 녹색 칩이 섞여 있다는 것 뿐이라고 가정해보자. 붉은 칩과 녹색 칩이 같은 갯수라고 생각할 이유는 없다. 사실 거의 대부분의 경우는 한 칩이 다른 칩보다 많을 것이다. 하지만 어떤 칩이 더 많을지, 얼마나 더 많을지에 대해서는 알 수 없다. 여기서 하나의 칩을 뽑는다면, 붉은 칩을 뽑을 확률은 0.5 이다.</p>
+<p>동전 던지기와 포커칩 뽑기의 불확실성이 어떻게 다를지에 대해서는 확실하지 않다. 동전 던지기는 매우 익숙하지만 주머니에서 포커칩을 뽑는 일은 매우 불확실성이 높다. 그렇다면 왜 두 가지 다른 사건에 대해서 같은 확률을 가정해야 할까? 불확실성이 다른 것은 맞다. 동전 던지기의 불확실성은 순수한 aleatory 하지만, 주머니에서 칩 뽑기는 당연히 epistemic 하다. 그래도, 하나의 동전 던지기와 하나의 포커칩 뽑기에 대해서 모든 불확실성은 하나의 확률로 측정할 수 있다. 앞면이거나 붉은 칩이거나 말이다.</p>
+<p>그런데 코인을 여러번 연속해서 던지거나 칩을 연속해서 뽑는 경우를 생각한다면 다른 문제가 발생한다. 코인을 던지는 일은 여전히 aleatory 하다. 아무리 동전을 많이 던져도 다음번에 동전의 앞면이 나오는 사건에 대한 불확실성은 그대로이고 0.5 라는 확률로 표현된다. 반면에 주머니에서 칩을 계속 뽑으면 다음번에 붉은 칩이 나올 확률은 이번에 나온 칩의 색에 따라 달라진다.</p>
+<p>Epistemic 불확실성은 주머니에서 칩을 연속으로 뽑으면서 나오는 붉은 칩의 비율에 달려있고, 모든 칩을 뽑을 때까지 계속 변한다. 그 비율은 0 과 1 사이의 값이다. 이 파라미터는 처음에는 알지 못하고, 주머니에서 칩을 뽑음에 따라 점점 알아가는 것이다. 반면 동전의 경우, 계속 던지기를 수행하면 앞면이 나오는 비율은 0.5에 수렴할 것이라는 사실을 알고 있다. 동전 던지기에서 epistemic 불확실성은 없고, 우리가 알지 못하는 파라미터도 없다.</p>
+<p>통계의 목적은 데이터에서 정보를 얻는 것이므로 모든 통계 문제에는 epistemic 불확실성이 존재한다. 데이터가 가지는 불확실성은 aleatory 한 성질과 epistemic 한 성질을 둘 다 가진다. Aleatory 한 성질은 무작위한 샘플링과 관측 에러에서 발생하며, epistemic 한 성질은 알아내고자 하는 변수를 알지 못하기 때문에 발생하는 것이다.</p>
+<hr />
+                
+                  
+                
+              
+              
+                
+
+  
+
+
+  <h2 id="__comments">Comments</h2>
+  <div id="disqus_thread"></div>
+  <script>var disqus_config=function(){this.page.url="http://jonqkim.github.io/Probability%20Theory/2021-04-11-Dicing%20with%20the%20Unknown.html",this.page.identifier="Probability%20Theory/2021-04-11-Dicing%20with%20the%20Unknown.html"};window.addEventListener("load",function(){var e=document,i=e.createElement("script");i.src="//jongkyu-kim.disqus.com/embed.js",i.setAttribute("data-timestamp",+new Date),(e.head||e.body).appendChild(i)})</script>
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../Deep%20Mind/2020-11-10-Fast_reinforcmenet_learning_through_the_composition_of_behaviours.html" title="Fast reinforcement learning through the composition of behaviours - KR" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Fast reinforcement learning through the composition of behaviours - KR
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../Reinforcement%20Learning/2021-02-07-MAML.html" title="Visualizing MAML with simple losses" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Visualizing MAML with simple losses
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.77e55a48.min.js"></script>
+      <script src="../assets/javascripts/bundle.aa3f9871.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: [],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.4ac00218.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+        <script src="../javascripts/config.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
